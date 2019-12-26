@@ -2,7 +2,7 @@ package main
 
 import(
 "fmt"
-"github.com/mikudos/mikudos-event-sync.git/broker"
+"github.com/mikudos/mikudos_event_sync.git/broker"
 )
 
 func main() {
@@ -17,10 +17,10 @@ import (
 	"os"
 	"strconv"
 
-	pb "github.com/mikudos/mikudos-event-sync.git/proto/schedule"
+	pb "github.com/mikudos/mikudos_event_sync.git/proto/schedule"
 
-	"github.com/mikudos/mikudos-event-sync.git/config"
-	"github.com/mikudos/mikudos-event-sync.git/handler"
+	"github.com/mikudos/mikudos_event_sync.git/config"
+	"github.com/mikudos/mikudos_event_sync.git/handler"
 
 	"google.golang.org/grpc"
 )

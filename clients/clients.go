@@ -8,9 +8,9 @@ import (
 
 	"github.com/robfig/cron/v3"
 
-	"github.com/mikudos/mikudos-event-sync.git/config"
-	pb "github.com/mikudos/mikudos-event-sync.git/proto/ai"
-	"github.com/mikudos/mikudos-event-sync.git/schedule"
+	"github.com/mikudos/mikudos_event_sync.git/config"
+	pb "github.com/mikudos/mikudos_event_sync.git/proto/ai"
+	"github.com/mikudos/mikudos_event_sync.git/schedule"
 	"google.golang.org/grpc"
 )
 

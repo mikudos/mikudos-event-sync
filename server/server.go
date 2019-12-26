@@ -1,15 +1,16 @@
-package handler
+package server
 
 import (
 	"context"
 	"fmt"
-	"github.com/mikudos/mikudos-event-sync.git/db"
-	pb "github.com/mikudos/mikudos-event-sync.git/proto/event_aggregate"
+
+	"github.com/mikudos/mikudos_event_sync.git/db"
+	pb "github.com/mikudos/mikudos_event_sync.git/proto/event_sync"
 )
 
 // Server 事件驱动服务间流程控制方法，提供基本的数据库操作方法
 type Server struct {
-	pb.EventAggregateServiceServer
+	pb.EventSyncServer
 }
 
 // CreateAggregate 新建聚合，返回聚合Id

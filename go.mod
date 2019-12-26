@@ -1,4 +1,4 @@
-module github.com/mikudos/mikudos-event-sync.git
+module github.com/mikudos/mikudos_event_sync.git
 
 go 1.12
 
