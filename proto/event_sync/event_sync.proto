@@ -5,48 +5,35 @@ package event_sync;
 service EventSyncService {
   // your model Requests
   rpc FindSceneInstanceList(FindRequest) returns (FindEventSyncResult) {}
-  rpc CreateEventSync(CreateEventSyncRequest) returns (EventSync) {}
-  rpc UpdateEventSync(UpdateEventSyncRequest) returns (EventSync) {}
-  rpc UpdateEventSyncById(UpdateEventSyncByIdRequest) returns (EventSync) {}
-  rpc DeleteEventSync(FindRequest) returns (DeleteResult) {}
-  rpc DeleteEventSyncById(GetRequest) returns (DeleteResult) {}
+  rpc JoinSceneInstance(stream ClientEventSyncMessage)
+      returns (stream ServerEventSyncMessage) {}
 }
 
-message FindRequest { string query = 1; }
+message FindRequest { InstanceState state = 1; }
 
-message GetRequest {
-  string id = 1;
-  string query = 2;
+enum InstanceState {
+  WAITING = 0;
+  READY = 1;
+  BEGIN = 2;
+  DELAY = 3;
+  FINISH = 4;
 }
 
-message CreateEventSyncRequest { string name = 1; }
-
-message UpdateEventSyncRequest {
-  string query = 1;
-  CreateEventSyncRequest obj = 2;
+message ClientEventSyncMessage {
+  string instanceId = 1;
+  EventType eventType = 2;
 }
 
-message UpdateEventSyncByIdRequest {
-  string id = 1;
-  CreateEventSyncRequest obj = 2;
+message ServerEventSyncMessage {
+  string instanceId = 1;
+  EventType eventType = 2;
+  InstanceState state = 3;
 }
 
-message DeleteResult {
-  bool state = 1;
-  int32 num = 2;
+enum EventType { // event type
+  JOIN = 0;
+  LEAVE = 1;
+  NORMAL = 2;
 }
 
-message EventSync {
-  string id = 1;
-  string name = 2;
-  string createdAt = 13;
-  string updatedAt = 14;
-  string deletedAt = 15;
-}
-
-message FindEventSyncResult {
-  repeated EventSync data = 1;
-  int32 limit = 2;
-  int64 skip = 3;
-  int64 total = 4;
-}
+message FindEventSyncResult {}
