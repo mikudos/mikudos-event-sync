@@ -38,18 +38,24 @@ func (s *Server) EventSyncSceneInstance(stream pb.EventSyncService_EventSyncScen
 		if err != nil {
 			break
 		}
-		instanceId := resp.GetInstanceId()
+		instanceID := resp.GetInstanceId()
 		switch resp.GetEventType() {
 		case pb.EventType_JOIN:
-			if s.SceneInstanceChans[instanceId] == nil {
-				s.SceneInstanceChans[instanceId] = make(map[uint32]chan bool)
+			if s.SceneInstanceChans[instanceID] == nil {
+				// 创建单独局
+				s.SceneInstanceChans[instanceID] = make(map[uint32]chan bool)
+				// 对应局状态的初始化
+				s.SceneInstanceInfos[instanceID] = map[InfoType]string{InstanceState: pb.InstanceState_WAITING.String(), InstanceLevel: "1", InstanceEntry: "charged"}
 			}
-			s.SceneInstanceChans[instanceId][s.streamID] = make(chan bool)
+			s.SceneInstanceChans[instanceID][s.streamID] = make(chan bool)
+			if len(s.SceneInstanceChans[instanceID]) == 4 {
+				s.SceneInstanceInfos[instanceID][InstanceState] = pb.InstanceState_READY.String()
+			}
 			break
 		case pb.EventType_LEAVE:
-			delete(s.SceneInstanceChans[instanceId], s.streamID)
-			if len(s.SceneInstanceChans[instanceId]) == 0 {
-				delete(s.SceneInstanceChans, instanceId)
+			delete(s.SceneInstanceChans[instanceID], s.streamID)
+			if len(s.SceneInstanceChans[instanceID]) == 0 {
+				delete(s.SceneInstanceChans, instanceID)
 			}
 			break
 		case pb.EventType_NORMAL: // handle event
