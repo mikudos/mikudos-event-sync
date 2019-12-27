@@ -16,6 +16,6 @@ const (
 type Server struct {
 	SceneName          string
 	streamID           uint32
-	SceneInstanceChans map[string]chan bool
+	SceneInstanceChans map[string]map[uint32]chan bool
 	SceneInstanceInfos map[string]map[InfoType]string
 }

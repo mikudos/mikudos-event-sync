@@ -10,7 +10,7 @@ import (
 	pb "github.com/mikudos/mikudos_event_sync/proto/event_sync"
 
 	"github.com/mikudos/mikudos_event_sync/config"
-	"github.com/mikudos/mikudos_event_sync/handler"
+	"github.com/mikudos/mikudos_event_sync/server"
 
 	"google.golang.org/grpc"
 )
@@ -29,7 +29,7 @@ func main() {
 	}
 
 	s := grpc.NewServer()                                  //新建gRPC实例
-	pb.RegisterScheduleServiceServer(s, &handler.Server{}) //在gRPC服务器注册服务实现
+	pb.RegisterEventSyncServiceServer(s, &server.Server{}) //在gRPC服务器注册服务实现
 	log.Println(fmt.Sprintf("server start at port: %d", port))
 	if err := s.Serve(lis); err != nil { //Serve()阻塞等待
 		log.Fatalf("failed to serve: %v", err)

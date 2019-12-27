@@ -26,11 +26,73 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
+type InstanceState int32
+
+const (
+	InstanceState_WAITING InstanceState = 0
+	InstanceState_READY   InstanceState = 1
+	InstanceState_BEGIN   InstanceState = 2
+	InstanceState_DELAY   InstanceState = 3
+	InstanceState_FINISH  InstanceState = 4
+)
+
+var InstanceState_name = map[int32]string{
+	0: "WAITING",
+	1: "READY",
+	2: "BEGIN",
+	3: "DELAY",
+	4: "FINISH",
+}
+
+var InstanceState_value = map[string]int32{
+	"WAITING": 0,
+	"READY":   1,
+	"BEGIN":   2,
+	"DELAY":   3,
+	"FINISH":  4,
+}
+
+func (x InstanceState) String() string {
+	return proto.EnumName(InstanceState_name, int32(x))
+}
+
+func (InstanceState) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_5cff40cac977f7df, []int{0}
+}
+
+type EventType int32
+
+const (
+	EventType_JOIN   EventType = 0
+	EventType_LEAVE  EventType = 1
+	EventType_NORMAL EventType = 2
+)
+
+var EventType_name = map[int32]string{
+	0: "JOIN",
+	1: "LEAVE",
+	2: "NORMAL",
+}
+
+var EventType_value = map[string]int32{
+	"JOIN":   0,
+	"LEAVE":  1,
+	"NORMAL": 2,
+}
+
+func (x EventType) String() string {
+	return proto.EnumName(EventType_name, int32(x))
+}
+
+func (EventType) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_5cff40cac977f7df, []int{1}
+}
+
 type FindRequest struct {
-	Query                string   `protobuf:"bytes,1,opt,name=query,proto3" json:"query,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	State                InstanceState `protobuf:"varint,1,opt,name=state,proto3,enum=event_sync.InstanceState" json:"state,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
+	XXX_unrecognized     []byte        `json:"-"`
+	XXX_sizecache        int32         `json:"-"`
 }
 
 func (m *FindRequest) Reset()         { *m = FindRequest{} }
@@ -58,326 +120,126 @@ func (m *FindRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_FindRequest proto.InternalMessageInfo
 
-func (m *FindRequest) GetQuery() string {
-	if m != nil {
-		return m.Query
-	}
-	return ""
-}
-
-type GetRequest struct {
-	Id                   string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Query                string   `protobuf:"bytes,2,opt,name=query,proto3" json:"query,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *GetRequest) Reset()         { *m = GetRequest{} }
-func (m *GetRequest) String() string { return proto.CompactTextString(m) }
-func (*GetRequest) ProtoMessage()    {}
-func (*GetRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5cff40cac977f7df, []int{1}
-}
-
-func (m *GetRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_GetRequest.Unmarshal(m, b)
-}
-func (m *GetRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_GetRequest.Marshal(b, m, deterministic)
-}
-func (m *GetRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetRequest.Merge(m, src)
-}
-func (m *GetRequest) XXX_Size() int {
-	return xxx_messageInfo_GetRequest.Size(m)
-}
-func (m *GetRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_GetRequest proto.InternalMessageInfo
-
-func (m *GetRequest) GetId() string {
-	if m != nil {
-		return m.Id
-	}
-	return ""
-}
-
-func (m *GetRequest) GetQuery() string {
-	if m != nil {
-		return m.Query
-	}
-	return ""
-}
-
-type CreateEventSyncRequest struct {
-	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *CreateEventSyncRequest) Reset()         { *m = CreateEventSyncRequest{} }
-func (m *CreateEventSyncRequest) String() string { return proto.CompactTextString(m) }
-func (*CreateEventSyncRequest) ProtoMessage()    {}
-func (*CreateEventSyncRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5cff40cac977f7df, []int{2}
-}
-
-func (m *CreateEventSyncRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_CreateEventSyncRequest.Unmarshal(m, b)
-}
-func (m *CreateEventSyncRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_CreateEventSyncRequest.Marshal(b, m, deterministic)
-}
-func (m *CreateEventSyncRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CreateEventSyncRequest.Merge(m, src)
-}
-func (m *CreateEventSyncRequest) XXX_Size() int {
-	return xxx_messageInfo_CreateEventSyncRequest.Size(m)
-}
-func (m *CreateEventSyncRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_CreateEventSyncRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_CreateEventSyncRequest proto.InternalMessageInfo
-
-func (m *CreateEventSyncRequest) GetName() string {
-	if m != nil {
-		return m.Name
-	}
-	return ""
-}
-
-type UpdateEventSyncRequest struct {
-	Query                string                  `protobuf:"bytes,1,opt,name=query,proto3" json:"query,omitempty"`
-	Obj                  *CreateEventSyncRequest `protobuf:"bytes,2,opt,name=obj,proto3" json:"obj,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}                `json:"-"`
-	XXX_unrecognized     []byte                  `json:"-"`
-	XXX_sizecache        int32                   `json:"-"`
-}
-
-func (m *UpdateEventSyncRequest) Reset()         { *m = UpdateEventSyncRequest{} }
-func (m *UpdateEventSyncRequest) String() string { return proto.CompactTextString(m) }
-func (*UpdateEventSyncRequest) ProtoMessage()    {}
-func (*UpdateEventSyncRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5cff40cac977f7df, []int{3}
-}
-
-func (m *UpdateEventSyncRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_UpdateEventSyncRequest.Unmarshal(m, b)
-}
-func (m *UpdateEventSyncRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_UpdateEventSyncRequest.Marshal(b, m, deterministic)
-}
-func (m *UpdateEventSyncRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UpdateEventSyncRequest.Merge(m, src)
-}
-func (m *UpdateEventSyncRequest) XXX_Size() int {
-	return xxx_messageInfo_UpdateEventSyncRequest.Size(m)
-}
-func (m *UpdateEventSyncRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_UpdateEventSyncRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_UpdateEventSyncRequest proto.InternalMessageInfo
-
-func (m *UpdateEventSyncRequest) GetQuery() string {
-	if m != nil {
-		return m.Query
-	}
-	return ""
-}
-
-func (m *UpdateEventSyncRequest) GetObj() *CreateEventSyncRequest {
-	if m != nil {
-		return m.Obj
-	}
-	return nil
-}
-
-type UpdateEventSyncByIdRequest struct {
-	Id                   string                  `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Obj                  *CreateEventSyncRequest `protobuf:"bytes,2,opt,name=obj,proto3" json:"obj,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}                `json:"-"`
-	XXX_unrecognized     []byte                  `json:"-"`
-	XXX_sizecache        int32                   `json:"-"`
-}
-
-func (m *UpdateEventSyncByIdRequest) Reset()         { *m = UpdateEventSyncByIdRequest{} }
-func (m *UpdateEventSyncByIdRequest) String() string { return proto.CompactTextString(m) }
-func (*UpdateEventSyncByIdRequest) ProtoMessage()    {}
-func (*UpdateEventSyncByIdRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5cff40cac977f7df, []int{4}
-}
-
-func (m *UpdateEventSyncByIdRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_UpdateEventSyncByIdRequest.Unmarshal(m, b)
-}
-func (m *UpdateEventSyncByIdRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_UpdateEventSyncByIdRequest.Marshal(b, m, deterministic)
-}
-func (m *UpdateEventSyncByIdRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UpdateEventSyncByIdRequest.Merge(m, src)
-}
-func (m *UpdateEventSyncByIdRequest) XXX_Size() int {
-	return xxx_messageInfo_UpdateEventSyncByIdRequest.Size(m)
-}
-func (m *UpdateEventSyncByIdRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_UpdateEventSyncByIdRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_UpdateEventSyncByIdRequest proto.InternalMessageInfo
-
-func (m *UpdateEventSyncByIdRequest) GetId() string {
-	if m != nil {
-		return m.Id
-	}
-	return ""
-}
-
-func (m *UpdateEventSyncByIdRequest) GetObj() *CreateEventSyncRequest {
-	if m != nil {
-		return m.Obj
-	}
-	return nil
-}
-
-type DeleteResult struct {
-	State                bool     `protobuf:"varint,1,opt,name=state,proto3" json:"state,omitempty"`
-	Num                  int32    `protobuf:"varint,2,opt,name=num,proto3" json:"num,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *DeleteResult) Reset()         { *m = DeleteResult{} }
-func (m *DeleteResult) String() string { return proto.CompactTextString(m) }
-func (*DeleteResult) ProtoMessage()    {}
-func (*DeleteResult) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5cff40cac977f7df, []int{5}
-}
-
-func (m *DeleteResult) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_DeleteResult.Unmarshal(m, b)
-}
-func (m *DeleteResult) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_DeleteResult.Marshal(b, m, deterministic)
-}
-func (m *DeleteResult) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DeleteResult.Merge(m, src)
-}
-func (m *DeleteResult) XXX_Size() int {
-	return xxx_messageInfo_DeleteResult.Size(m)
-}
-func (m *DeleteResult) XXX_DiscardUnknown() {
-	xxx_messageInfo_DeleteResult.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_DeleteResult proto.InternalMessageInfo
-
-func (m *DeleteResult) GetState() bool {
+func (m *FindRequest) GetState() InstanceState {
 	if m != nil {
 		return m.State
 	}
-	return false
+	return InstanceState_WAITING
 }
 
-func (m *DeleteResult) GetNum() int32 {
+type ClientEventSyncMessage struct {
+	InstanceId           string    `protobuf:"bytes,1,opt,name=instanceId,proto3" json:"instanceId,omitempty"`
+	EventType            EventType `protobuf:"varint,2,opt,name=eventType,proto3,enum=event_sync.EventType" json:"eventType,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
+	XXX_unrecognized     []byte    `json:"-"`
+	XXX_sizecache        int32     `json:"-"`
+}
+
+func (m *ClientEventSyncMessage) Reset()         { *m = ClientEventSyncMessage{} }
+func (m *ClientEventSyncMessage) String() string { return proto.CompactTextString(m) }
+func (*ClientEventSyncMessage) ProtoMessage()    {}
+func (*ClientEventSyncMessage) Descriptor() ([]byte, []int) {
+	return fileDescriptor_5cff40cac977f7df, []int{1}
+}
+
+func (m *ClientEventSyncMessage) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ClientEventSyncMessage.Unmarshal(m, b)
+}
+func (m *ClientEventSyncMessage) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ClientEventSyncMessage.Marshal(b, m, deterministic)
+}
+func (m *ClientEventSyncMessage) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ClientEventSyncMessage.Merge(m, src)
+}
+func (m *ClientEventSyncMessage) XXX_Size() int {
+	return xxx_messageInfo_ClientEventSyncMessage.Size(m)
+}
+func (m *ClientEventSyncMessage) XXX_DiscardUnknown() {
+	xxx_messageInfo_ClientEventSyncMessage.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ClientEventSyncMessage proto.InternalMessageInfo
+
+func (m *ClientEventSyncMessage) GetInstanceId() string {
 	if m != nil {
-		return m.Num
-	}
-	return 0
-}
-
-type EventSync struct {
-	Id                   string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name                 string   `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	CreatedAt            string   `protobuf:"bytes,13,opt,name=createdAt,proto3" json:"createdAt,omitempty"`
-	UpdatedAt            string   `protobuf:"bytes,14,opt,name=updatedAt,proto3" json:"updatedAt,omitempty"`
-	DeletedAt            string   `protobuf:"bytes,15,opt,name=deletedAt,proto3" json:"deletedAt,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *EventSync) Reset()         { *m = EventSync{} }
-func (m *EventSync) String() string { return proto.CompactTextString(m) }
-func (*EventSync) ProtoMessage()    {}
-func (*EventSync) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5cff40cac977f7df, []int{6}
-}
-
-func (m *EventSync) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_EventSync.Unmarshal(m, b)
-}
-func (m *EventSync) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_EventSync.Marshal(b, m, deterministic)
-}
-func (m *EventSync) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_EventSync.Merge(m, src)
-}
-func (m *EventSync) XXX_Size() int {
-	return xxx_messageInfo_EventSync.Size(m)
-}
-func (m *EventSync) XXX_DiscardUnknown() {
-	xxx_messageInfo_EventSync.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_EventSync proto.InternalMessageInfo
-
-func (m *EventSync) GetId() string {
-	if m != nil {
-		return m.Id
+		return m.InstanceId
 	}
 	return ""
 }
 
-func (m *EventSync) GetName() string {
+func (m *ClientEventSyncMessage) GetEventType() EventType {
 	if m != nil {
-		return m.Name
+		return m.EventType
+	}
+	return EventType_JOIN
+}
+
+type ServerEventSyncMessage struct {
+	InstanceId           string        `protobuf:"bytes,1,opt,name=instanceId,proto3" json:"instanceId,omitempty"`
+	EventType            EventType     `protobuf:"varint,2,opt,name=eventType,proto3,enum=event_sync.EventType" json:"eventType,omitempty"`
+	State                InstanceState `protobuf:"varint,3,opt,name=state,proto3,enum=event_sync.InstanceState" json:"state,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
+	XXX_unrecognized     []byte        `json:"-"`
+	XXX_sizecache        int32         `json:"-"`
+}
+
+func (m *ServerEventSyncMessage) Reset()         { *m = ServerEventSyncMessage{} }
+func (m *ServerEventSyncMessage) String() string { return proto.CompactTextString(m) }
+func (*ServerEventSyncMessage) ProtoMessage()    {}
+func (*ServerEventSyncMessage) Descriptor() ([]byte, []int) {
+	return fileDescriptor_5cff40cac977f7df, []int{2}
+}
+
+func (m *ServerEventSyncMessage) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ServerEventSyncMessage.Unmarshal(m, b)
+}
+func (m *ServerEventSyncMessage) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ServerEventSyncMessage.Marshal(b, m, deterministic)
+}
+func (m *ServerEventSyncMessage) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ServerEventSyncMessage.Merge(m, src)
+}
+func (m *ServerEventSyncMessage) XXX_Size() int {
+	return xxx_messageInfo_ServerEventSyncMessage.Size(m)
+}
+func (m *ServerEventSyncMessage) XXX_DiscardUnknown() {
+	xxx_messageInfo_ServerEventSyncMessage.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ServerEventSyncMessage proto.InternalMessageInfo
+
+func (m *ServerEventSyncMessage) GetInstanceId() string {
+	if m != nil {
+		return m.InstanceId
 	}
 	return ""
 }
 
-func (m *EventSync) GetCreatedAt() string {
+func (m *ServerEventSyncMessage) GetEventType() EventType {
 	if m != nil {
-		return m.CreatedAt
+		return m.EventType
 	}
-	return ""
+	return EventType_JOIN
 }
 
-func (m *EventSync) GetUpdatedAt() string {
+func (m *ServerEventSyncMessage) GetState() InstanceState {
 	if m != nil {
-		return m.UpdatedAt
+		return m.State
 	}
-	return ""
-}
-
-func (m *EventSync) GetDeletedAt() string {
-	if m != nil {
-		return m.DeletedAt
-	}
-	return ""
+	return InstanceState_WAITING
 }
 
 type FindEventSyncResult struct {
-	Data                 []*EventSync `protobuf:"bytes,1,rep,name=data,proto3" json:"data,omitempty"`
-	Limit                int32        `protobuf:"varint,2,opt,name=limit,proto3" json:"limit,omitempty"`
-	Skip                 int64        `protobuf:"varint,3,opt,name=skip,proto3" json:"skip,omitempty"`
-	Total                int64        `protobuf:"varint,4,opt,name=total,proto3" json:"total,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
-	XXX_unrecognized     []byte       `json:"-"`
-	XXX_sizecache        int32        `json:"-"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *FindEventSyncResult) Reset()         { *m = FindEventSyncResult{} }
 func (m *FindEventSyncResult) String() string { return proto.CompactTextString(m) }
 func (*FindEventSyncResult) ProtoMessage()    {}
 func (*FindEventSyncResult) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5cff40cac977f7df, []int{7}
+	return fileDescriptor_5cff40cac977f7df, []int{3}
 }
 
 func (m *FindEventSyncResult) XXX_Unmarshal(b []byte) error {
@@ -398,78 +260,42 @@ func (m *FindEventSyncResult) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_FindEventSyncResult proto.InternalMessageInfo
 
-func (m *FindEventSyncResult) GetData() []*EventSync {
-	if m != nil {
-		return m.Data
-	}
-	return nil
-}
-
-func (m *FindEventSyncResult) GetLimit() int32 {
-	if m != nil {
-		return m.Limit
-	}
-	return 0
-}
-
-func (m *FindEventSyncResult) GetSkip() int64 {
-	if m != nil {
-		return m.Skip
-	}
-	return 0
-}
-
-func (m *FindEventSyncResult) GetTotal() int64 {
-	if m != nil {
-		return m.Total
-	}
-	return 0
-}
-
 func init() {
+	proto.RegisterEnum("event_sync.InstanceState", InstanceState_name, InstanceState_value)
+	proto.RegisterEnum("event_sync.EventType", EventType_name, EventType_value)
 	proto.RegisterType((*FindRequest)(nil), "event_sync.FindRequest")
-	proto.RegisterType((*GetRequest)(nil), "event_sync.GetRequest")
-	proto.RegisterType((*CreateEventSyncRequest)(nil), "event_sync.CreateEventSyncRequest")
-	proto.RegisterType((*UpdateEventSyncRequest)(nil), "event_sync.UpdateEventSyncRequest")
-	proto.RegisterType((*UpdateEventSyncByIdRequest)(nil), "event_sync.UpdateEventSyncByIdRequest")
-	proto.RegisterType((*DeleteResult)(nil), "event_sync.DeleteResult")
-	proto.RegisterType((*EventSync)(nil), "event_sync.EventSync")
+	proto.RegisterType((*ClientEventSyncMessage)(nil), "event_sync.ClientEventSyncMessage")
+	proto.RegisterType((*ServerEventSyncMessage)(nil), "event_sync.ServerEventSyncMessage")
 	proto.RegisterType((*FindEventSyncResult)(nil), "event_sync.FindEventSyncResult")
 }
 
 func init() { proto.RegisterFile("proto/event_sync/event_sync.proto", fileDescriptor_5cff40cac977f7df) }
 
 var fileDescriptor_5cff40cac977f7df = []byte{
-	// 460 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x54, 0x5d, 0x8b, 0xd3, 0x40,
-	0x14, 0x6d, 0x3e, 0x56, 0xec, 0xad, 0x6e, 0xeb, 0x54, 0x6b, 0x28, 0x82, 0x75, 0x04, 0xa9, 0x20,
-	0x2b, 0x44, 0xf1, 0x5d, 0x57, 0x77, 0x59, 0x10, 0x85, 0x14, 0x7d, 0x95, 0x34, 0x73, 0x1f, 0x46,
-	0xd3, 0xa4, 0x4d, 0x26, 0x85, 0xbc, 0xf9, 0xea, 0xef, 0xf1, 0x0f, 0xca, 0xcc, 0xb4, 0xc9, 0x34,
-	0x26, 0x41, 0x7c, 0x9b, 0xb9, 0xe7, 0xce, 0xb9, 0xe7, 0x4c, 0xce, 0x04, 0x9e, 0x6c, 0xb3, 0x54,
-	0xa4, 0x2f, 0x71, 0x8f, 0x89, 0xf8, 0x96, 0x97, 0x49, 0x64, 0x2c, 0x2f, 0x14, 0x46, 0xa0, 0xae,
-	0xd0, 0xa7, 0x30, 0xba, 0xe2, 0x09, 0x0b, 0x70, 0x57, 0x60, 0x2e, 0xc8, 0x7d, 0x38, 0xdb, 0x15,
-	0x98, 0x95, 0x9e, 0xb5, 0xb0, 0x96, 0xc3, 0x40, 0x6f, 0xa8, 0x0f, 0x70, 0x8d, 0xe2, 0xd8, 0x73,
-	0x0e, 0x36, 0x67, 0x87, 0x06, 0x9b, 0xb3, 0xfa, 0x8c, 0x6d, 0x9e, 0x79, 0x01, 0xb3, 0xcb, 0x0c,
-	0x43, 0x81, 0x1f, 0xe4, 0xb0, 0x55, 0x99, 0x44, 0xc7, 0xf3, 0x04, 0xdc, 0x24, 0xdc, 0xe0, 0x81,
-	0x41, 0xad, 0x29, 0x83, 0xd9, 0x97, 0x2d, 0x6b, 0xeb, 0x6e, 0x55, 0x44, 0x5e, 0x83, 0x93, 0xae,
-	0xbf, 0xab, 0x89, 0x23, 0x9f, 0x5e, 0x18, 0x16, 0xdb, 0x87, 0x06, 0xb2, 0x9d, 0xae, 0x61, 0xde,
-	0x98, 0xf2, 0xae, 0xbc, 0x61, 0x5d, 0xbe, 0xfe, 0x6f, 0xc6, 0x1b, 0xb8, 0xf3, 0x1e, 0x63, 0x14,
-	0x18, 0x60, 0x5e, 0xc4, 0x4a, 0x7f, 0x2e, 0x42, 0xa1, 0xed, 0xde, 0x0e, 0xf4, 0x86, 0x4c, 0xc0,
-	0x49, 0x8a, 0x8d, 0xe2, 0x3e, 0x0b, 0xe4, 0x92, 0xfe, 0xb2, 0x60, 0x58, 0x31, 0xfe, 0xa5, 0xe5,
-	0x78, 0x67, 0x76, 0x7d, 0x67, 0xe4, 0x11, 0x0c, 0x23, 0x25, 0x84, 0xbd, 0x15, 0xde, 0x5d, 0x05,
-	0xd4, 0x05, 0x89, 0x16, 0xca, 0xab, 0x44, 0xcf, 0x35, 0x5a, 0x15, 0x24, 0xca, 0x94, 0x4a, 0x89,
-	0x8e, 0x35, 0x5a, 0x15, 0xe8, 0x4f, 0x0b, 0xa6, 0x32, 0x15, 0x86, 0x43, 0xe5, 0xe5, 0x39, 0xb8,
-	0x2c, 0x14, 0xa1, 0x67, 0x2d, 0x9c, 0xe5, 0xc8, 0x7f, 0x60, 0x5e, 0x49, 0xdd, 0xaa, 0x5a, 0xa4,
-	0xed, 0x98, 0x6f, 0xb8, 0x38, 0x58, 0xd4, 0x1b, 0x69, 0x23, 0xff, 0xc1, 0xb7, 0x9e, 0xb3, 0xb0,
-	0x96, 0x4e, 0xa0, 0xd6, 0xb2, 0x53, 0xa4, 0x22, 0x8c, 0x3d, 0x57, 0x15, 0xf5, 0xc6, 0xff, 0xed,
-	0xc2, 0xa4, 0xe2, 0x5c, 0x61, 0xb6, 0xe7, 0x11, 0x92, 0xcf, 0x70, 0xef, 0x44, 0xd6, 0x47, 0x9e,
-	0x0b, 0xf2, 0xd0, 0x94, 0x61, 0x64, 0x79, 0xfe, 0xb8, 0x09, 0x34, 0xec, 0xd0, 0x01, 0xb9, 0x84,
-	0xc9, 0x35, 0x8a, 0x93, 0x34, 0x90, 0x99, 0x79, 0xac, 0x8e, 0xfd, 0xbc, 0xdd, 0x2e, 0x1d, 0x90,
-	0x4f, 0x30, 0x6e, 0x04, 0x82, 0xfc, 0x43, 0x5a, 0x7a, 0xf9, 0x1a, 0x29, 0x3d, 0xe5, 0x6b, 0x7f,
-	0x28, 0xdd, 0x7c, 0x5f, 0x61, 0xda, 0x92, 0x7a, 0xf2, 0xac, 0x87, 0xd3, 0x78, 0x16, 0xdd, 0xbc,
-	0x57, 0x30, 0xd6, 0x49, 0xaf, 0x75, 0x76, 0x7e, 0x0b, 0xcf, 0x04, 0xcc, 0xf7, 0x41, 0x07, 0xe4,
-	0x06, 0xa6, 0x0d, 0x9e, 0xde, 0xef, 0xd0, 0x43, 0xb5, 0xbe, 0xa5, 0x7e, 0x70, 0xaf, 0xfe, 0x04,
-	0x00, 0x00, 0xff, 0xff, 0xb3, 0xc5, 0x56, 0x1a, 0x05, 0x05, 0x00, 0x00,
+	// 357 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x52, 0x4d, 0x6b, 0x22, 0x41,
+	0x10, 0xb5, 0xfd, 0xda, 0x9d, 0x92, 0x5d, 0x9a, 0x5e, 0x74, 0x5d, 0x0f, 0xfb, 0x31, 0x27, 0x91,
+	0x45, 0x83, 0xde, 0x03, 0x93, 0x38, 0x9a, 0x0e, 0xe3, 0x08, 0x33, 0x92, 0xe0, 0x29, 0x98, 0xb1,
+	0x12, 0x06, 0x4c, 0x6b, 0xec, 0x56, 0xf0, 0xcf, 0xe4, 0x2f, 0xe5, 0x2f, 0x85, 0x1e, 0xa3, 0xd3,
+	0x8a, 0x87, 0x9c, 0x72, 0x2b, 0xba, 0x5e, 0xbd, 0xf7, 0xea, 0x75, 0xc1, 0xbf, 0xc5, 0x72, 0xae,
+	0xe6, 0x2d, 0x5c, 0xa3, 0x50, 0x77, 0x72, 0x23, 0x22, 0xa3, 0x6c, 0x26, 0x3d, 0x06, 0xe9, 0x8b,
+	0x7d, 0x0e, 0xa5, 0x5e, 0x2c, 0xa6, 0x01, 0x3e, 0xaf, 0x50, 0x2a, 0xd6, 0x82, 0x82, 0x54, 0x13,
+	0x85, 0x55, 0xf2, 0x97, 0xd4, 0xbf, 0xb7, 0x7f, 0x35, 0x8d, 0x61, 0x2e, 0xa4, 0x9a, 0x88, 0x08,
+	0x43, 0x0d, 0x08, 0xb6, 0x38, 0xfb, 0x09, 0x2a, 0x97, 0xb3, 0x18, 0x85, 0x72, 0x35, 0x30, 0xdc,
+	0x88, 0x68, 0x80, 0x52, 0x4e, 0x1e, 0x91, 0xfd, 0x06, 0x88, 0xdf, 0x27, 0xf8, 0x34, 0xe1, 0xb3,
+	0x02, 0xe3, 0x85, 0x75, 0xc0, 0x4a, 0xc8, 0x47, 0x9b, 0x05, 0x56, 0xb3, 0x89, 0x5c, 0xd9, 0x94,
+	0x73, 0x77, 0xcd, 0x20, 0xc5, 0xd9, 0x2f, 0x04, 0x2a, 0x21, 0x2e, 0xd7, 0xb8, 0xfc, 0x14, 0xbd,
+	0x34, 0x8f, 0xdc, 0x07, 0xf3, 0x28, 0xc3, 0x0f, 0x9d, 0xe7, 0xde, 0x5d, 0x80, 0x72, 0x35, 0x53,
+	0x0d, 0x0e, 0xdf, 0x0e, 0xe0, 0xac, 0x04, 0x5f, 0x6e, 0x1d, 0x3e, 0xe2, 0x7e, 0x9f, 0x66, 0x98,
+	0x05, 0x85, 0xc0, 0x75, 0xba, 0x63, 0x4a, 0x74, 0x79, 0xe1, 0xf6, 0xb9, 0x4f, 0xb3, 0xba, 0xec,
+	0xba, 0x9e, 0x33, 0xa6, 0x39, 0x06, 0x50, 0xec, 0x71, 0x9f, 0x87, 0x57, 0x34, 0xdf, 0xf8, 0x0f,
+	0xd6, 0xde, 0x2a, 0xfb, 0x0a, 0xf9, 0xeb, 0x21, 0xf7, 0xb7, 0x1c, 0x9e, 0xeb, 0xdc, 0xb8, 0x94,
+	0x68, 0xb4, 0x3f, 0x0c, 0x06, 0x8e, 0x47, 0xb3, 0xed, 0x57, 0x02, 0x74, 0x6f, 0x46, 0x27, 0x17,
+	0x47, 0xc8, 0x42, 0x28, 0x6b, 0x93, 0x61, 0x84, 0x02, 0x77, 0xb6, 0xbc, 0x58, 0x2a, 0xf6, 0xd3,
+	0xdc, 0xcf, 0xb8, 0x8b, 0xda, 0x9f, 0xe3, 0xc6, 0xd1, 0x82, 0x76, 0x86, 0x3d, 0x40, 0x25, 0x15,
+	0x32, 0x99, 0x99, 0x6d, 0x0e, 0x9f, 0xbe, 0x96, 0xda, 0x01, 0xe6, 0xf4, 0x0f, 0xdb, 0x99, 0x3a,
+	0x39, 0x23, 0xf7, 0xc5, 0xe4, 0x88, 0x3b, 0x6f, 0x01, 0x00, 0x00, 0xff, 0xff, 0xe1, 0x8a, 0x27,
+	0xff, 0xe9, 0x02, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -485,13 +311,8 @@ const _ = grpc.SupportPackageIsVersion4
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type EventSyncServiceClient interface {
 	// your model Requests
-	FindEventSyncList(ctx context.Context, in *FindRequest, opts ...grpc.CallOption) (*FindEventSyncResult, error)
-	GetEventSyncById(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*EventSync, error)
-	CreateEventSync(ctx context.Context, in *CreateEventSyncRequest, opts ...grpc.CallOption) (*EventSync, error)
-	UpdateEventSync(ctx context.Context, in *UpdateEventSyncRequest, opts ...grpc.CallOption) (*EventSync, error)
-	UpdateEventSyncById(ctx context.Context, in *UpdateEventSyncByIdRequest, opts ...grpc.CallOption) (*EventSync, error)
-	DeleteEventSync(ctx context.Context, in *FindRequest, opts ...grpc.CallOption) (*DeleteResult, error)
-	DeleteEventSyncById(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*DeleteResult, error)
+	FindSceneInstanceList(ctx context.Context, in *FindRequest, opts ...grpc.CallOption) (*FindEventSyncResult, error)
+	EventSyncSceneInstance(ctx context.Context, opts ...grpc.CallOption) (EventSyncService_EventSyncSceneInstanceClient, error)
 }
 
 type eventSyncServiceClient struct {
@@ -502,235 +323,110 @@ func NewEventSyncServiceClient(cc *grpc.ClientConn) EventSyncServiceClient {
 	return &eventSyncServiceClient{cc}
 }
 
-func (c *eventSyncServiceClient) FindEventSyncList(ctx context.Context, in *FindRequest, opts ...grpc.CallOption) (*FindEventSyncResult, error) {
+func (c *eventSyncServiceClient) FindSceneInstanceList(ctx context.Context, in *FindRequest, opts ...grpc.CallOption) (*FindEventSyncResult, error) {
 	out := new(FindEventSyncResult)
-	err := c.cc.Invoke(ctx, "/event_sync.EventSyncService/FindEventSyncList", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/event_sync.EventSyncService/FindSceneInstanceList", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *eventSyncServiceClient) GetEventSyncById(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*EventSync, error) {
-	out := new(EventSync)
-	err := c.cc.Invoke(ctx, "/event_sync.EventSyncService/GetEventSyncById", in, out, opts...)
+func (c *eventSyncServiceClient) EventSyncSceneInstance(ctx context.Context, opts ...grpc.CallOption) (EventSyncService_EventSyncSceneInstanceClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_EventSyncService_serviceDesc.Streams[0], "/event_sync.EventSyncService/EventSyncSceneInstance", opts...)
 	if err != nil {
 		return nil, err
 	}
-	return out, nil
+	x := &eventSyncServiceEventSyncSceneInstanceClient{stream}
+	return x, nil
 }
 
-func (c *eventSyncServiceClient) CreateEventSync(ctx context.Context, in *CreateEventSyncRequest, opts ...grpc.CallOption) (*EventSync, error) {
-	out := new(EventSync)
-	err := c.cc.Invoke(ctx, "/event_sync.EventSyncService/CreateEventSync", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+type EventSyncService_EventSyncSceneInstanceClient interface {
+	Send(*ClientEventSyncMessage) error
+	Recv() (*ServerEventSyncMessage, error)
+	grpc.ClientStream
 }
 
-func (c *eventSyncServiceClient) UpdateEventSync(ctx context.Context, in *UpdateEventSyncRequest, opts ...grpc.CallOption) (*EventSync, error) {
-	out := new(EventSync)
-	err := c.cc.Invoke(ctx, "/event_sync.EventSyncService/UpdateEventSync", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+type eventSyncServiceEventSyncSceneInstanceClient struct {
+	grpc.ClientStream
 }
 
-func (c *eventSyncServiceClient) UpdateEventSyncById(ctx context.Context, in *UpdateEventSyncByIdRequest, opts ...grpc.CallOption) (*EventSync, error) {
-	out := new(EventSync)
-	err := c.cc.Invoke(ctx, "/event_sync.EventSyncService/UpdateEventSyncById", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+func (x *eventSyncServiceEventSyncSceneInstanceClient) Send(m *ClientEventSyncMessage) error {
+	return x.ClientStream.SendMsg(m)
 }
 
-func (c *eventSyncServiceClient) DeleteEventSync(ctx context.Context, in *FindRequest, opts ...grpc.CallOption) (*DeleteResult, error) {
-	out := new(DeleteResult)
-	err := c.cc.Invoke(ctx, "/event_sync.EventSyncService/DeleteEventSync", in, out, opts...)
-	if err != nil {
+func (x *eventSyncServiceEventSyncSceneInstanceClient) Recv() (*ServerEventSyncMessage, error) {
+	m := new(ServerEventSyncMessage)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
-	return out, nil
-}
-
-func (c *eventSyncServiceClient) DeleteEventSyncById(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*DeleteResult, error) {
-	out := new(DeleteResult)
-	err := c.cc.Invoke(ctx, "/event_sync.EventSyncService/DeleteEventSyncById", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+	return m, nil
 }
 
 // EventSyncServiceServer is the server API for EventSyncService service.
 type EventSyncServiceServer interface {
 	// your model Requests
-	FindEventSyncList(context.Context, *FindRequest) (*FindEventSyncResult, error)
-	GetEventSyncById(context.Context, *GetRequest) (*EventSync, error)
-	CreateEventSync(context.Context, *CreateEventSyncRequest) (*EventSync, error)
-	UpdateEventSync(context.Context, *UpdateEventSyncRequest) (*EventSync, error)
-	UpdateEventSyncById(context.Context, *UpdateEventSyncByIdRequest) (*EventSync, error)
-	DeleteEventSync(context.Context, *FindRequest) (*DeleteResult, error)
-	DeleteEventSyncById(context.Context, *GetRequest) (*DeleteResult, error)
+	FindSceneInstanceList(context.Context, *FindRequest) (*FindEventSyncResult, error)
+	EventSyncSceneInstance(EventSyncService_EventSyncSceneInstanceServer) error
 }
 
 // UnimplementedEventSyncServiceServer can be embedded to have forward compatible implementations.
 type UnimplementedEventSyncServiceServer struct {
 }
 
-func (*UnimplementedEventSyncServiceServer) FindEventSyncList(ctx context.Context, req *FindRequest) (*FindEventSyncResult, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FindEventSyncList not implemented")
+func (*UnimplementedEventSyncServiceServer) FindSceneInstanceList(ctx context.Context, req *FindRequest) (*FindEventSyncResult, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FindSceneInstanceList not implemented")
 }
-func (*UnimplementedEventSyncServiceServer) GetEventSyncById(ctx context.Context, req *GetRequest) (*EventSync, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetEventSyncById not implemented")
-}
-func (*UnimplementedEventSyncServiceServer) CreateEventSync(ctx context.Context, req *CreateEventSyncRequest) (*EventSync, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateEventSync not implemented")
-}
-func (*UnimplementedEventSyncServiceServer) UpdateEventSync(ctx context.Context, req *UpdateEventSyncRequest) (*EventSync, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateEventSync not implemented")
-}
-func (*UnimplementedEventSyncServiceServer) UpdateEventSyncById(ctx context.Context, req *UpdateEventSyncByIdRequest) (*EventSync, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateEventSyncById not implemented")
-}
-func (*UnimplementedEventSyncServiceServer) DeleteEventSync(ctx context.Context, req *FindRequest) (*DeleteResult, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteEventSync not implemented")
-}
-func (*UnimplementedEventSyncServiceServer) DeleteEventSyncById(ctx context.Context, req *GetRequest) (*DeleteResult, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteEventSyncById not implemented")
+func (*UnimplementedEventSyncServiceServer) EventSyncSceneInstance(srv EventSyncService_EventSyncSceneInstanceServer) error {
+	return status.Errorf(codes.Unimplemented, "method EventSyncSceneInstance not implemented")
 }
 
 func RegisterEventSyncServiceServer(s *grpc.Server, srv EventSyncServiceServer) {
 	s.RegisterService(&_EventSyncService_serviceDesc, srv)
 }
 
-func _EventSyncService_FindEventSyncList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _EventSyncService_FindSceneInstanceList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(FindRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(EventSyncServiceServer).FindEventSyncList(ctx, in)
+		return srv.(EventSyncServiceServer).FindSceneInstanceList(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/event_sync.EventSyncService/FindEventSyncList",
+		FullMethod: "/event_sync.EventSyncService/FindSceneInstanceList",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EventSyncServiceServer).FindEventSyncList(ctx, req.(*FindRequest))
+		return srv.(EventSyncServiceServer).FindSceneInstanceList(ctx, req.(*FindRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _EventSyncService_GetEventSyncById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(EventSyncServiceServer).GetEventSyncById(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/event_sync.EventSyncService/GetEventSyncById",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EventSyncServiceServer).GetEventSyncById(ctx, req.(*GetRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+func _EventSyncService_EventSyncSceneInstance_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(EventSyncServiceServer).EventSyncSceneInstance(&eventSyncServiceEventSyncSceneInstanceServer{stream})
 }
 
-func _EventSyncService_CreateEventSync_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateEventSyncRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(EventSyncServiceServer).CreateEventSync(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/event_sync.EventSyncService/CreateEventSync",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EventSyncServiceServer).CreateEventSync(ctx, req.(*CreateEventSyncRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+type EventSyncService_EventSyncSceneInstanceServer interface {
+	Send(*ServerEventSyncMessage) error
+	Recv() (*ClientEventSyncMessage, error)
+	grpc.ServerStream
 }
 
-func _EventSyncService_UpdateEventSync_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateEventSyncRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(EventSyncServiceServer).UpdateEventSync(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/event_sync.EventSyncService/UpdateEventSync",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EventSyncServiceServer).UpdateEventSync(ctx, req.(*UpdateEventSyncRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+type eventSyncServiceEventSyncSceneInstanceServer struct {
+	grpc.ServerStream
 }
 
-func _EventSyncService_UpdateEventSyncById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateEventSyncByIdRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(EventSyncServiceServer).UpdateEventSyncById(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/event_sync.EventSyncService/UpdateEventSyncById",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EventSyncServiceServer).UpdateEventSyncById(ctx, req.(*UpdateEventSyncByIdRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+func (x *eventSyncServiceEventSyncSceneInstanceServer) Send(m *ServerEventSyncMessage) error {
+	return x.ServerStream.SendMsg(m)
 }
 
-func _EventSyncService_DeleteEventSync_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FindRequest)
-	if err := dec(in); err != nil {
+func (x *eventSyncServiceEventSyncSceneInstanceServer) Recv() (*ClientEventSyncMessage, error) {
+	m := new(ClientEventSyncMessage)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
-		return srv.(EventSyncServiceServer).DeleteEventSync(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/event_sync.EventSyncService/DeleteEventSync",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EventSyncServiceServer).DeleteEventSync(ctx, req.(*FindRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _EventSyncService_DeleteEventSyncById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(EventSyncServiceServer).DeleteEventSyncById(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/event_sync.EventSyncService/DeleteEventSyncById",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EventSyncServiceServer).DeleteEventSyncById(ctx, req.(*GetRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	return m, nil
 }
 
 var _EventSyncService_serviceDesc = grpc.ServiceDesc{
@@ -738,34 +434,17 @@ var _EventSyncService_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*EventSyncServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "FindEventSyncList",
-			Handler:    _EventSyncService_FindEventSyncList_Handler,
-		},
-		{
-			MethodName: "GetEventSyncById",
-			Handler:    _EventSyncService_GetEventSyncById_Handler,
-		},
-		{
-			MethodName: "CreateEventSync",
-			Handler:    _EventSyncService_CreateEventSync_Handler,
-		},
-		{
-			MethodName: "UpdateEventSync",
-			Handler:    _EventSyncService_UpdateEventSync_Handler,
-		},
-		{
-			MethodName: "UpdateEventSyncById",
-			Handler:    _EventSyncService_UpdateEventSyncById_Handler,
-		},
-		{
-			MethodName: "DeleteEventSync",
-			Handler:    _EventSyncService_DeleteEventSync_Handler,
-		},
-		{
-			MethodName: "DeleteEventSyncById",
-			Handler:    _EventSyncService_DeleteEventSyncById_Handler,
+			MethodName: "FindSceneInstanceList",
+			Handler:    _EventSyncService_FindSceneInstanceList_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "EventSyncSceneInstance",
+			Handler:       _EventSyncService_EventSyncSceneInstance_Handler,
+			ServerStreams: true,
+			ClientStreams: true,
+		},
+	},
 	Metadata: "proto/event_sync/event_sync.proto",
 }

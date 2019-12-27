@@ -5,7 +5,7 @@ package event_sync;
 service EventSyncService {
   // your model Requests
   rpc FindSceneInstanceList(FindRequest) returns (FindEventSyncResult) {}
-  rpc JoinSceneInstance(stream ClientEventSyncMessage)
+  rpc EventSyncSceneInstance(stream ClientEventSyncMessage)
       returns (stream ServerEventSyncMessage) {}
 }
 
