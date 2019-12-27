@@ -36,4 +36,6 @@ enum EventType { // event type
   NORMAL = 2;
 }
 
-message FindEventSyncResult {}
+message FindEventSyncResult {
+  repeated string instanceIdArr = 1;
+}

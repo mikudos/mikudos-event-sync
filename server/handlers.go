@@ -9,20 +9,14 @@ import (
 
 // FindSceneInstanceList FindSceneInstanceList
 func (s *Server) FindSceneInstanceList(ctx context.Context, req *pb.FindRequest) (*pb.FindEventSyncResult, error) {
-	switch req.GetState() {
-	case pb.InstanceState_WAITING:
-		break
-	case pb.InstanceState_READY:
-		break
-	case pb.InstanceState_BEGIN:
-		break
-	case pb.InstanceState_DELAY:
-		break
-	case pb.InstanceState_FINISH:
-		break
+	list := []string{}
+	for instanceID, _ := range s.SceneInstanceInfos {
+		if s.SceneInstanceInfos[instanceID][InstanceState] == req.GetState().String() {
+			list = append(list, instanceID)
+		}
 	}
 
-	res := &pb.FindEventSyncResult{}
+	res := &pb.FindEventSyncResult{InstanceIdArr: list}
 	return res, nil
 }
 
