@@ -1,15 +1,5 @@
 package main
 
-import(
-"fmt"
-"github.com/mikudos/mikudos_event_sync.git/broker"
-)
-
-func main() {
-	fmt.Println(hello.BuildHello())
-}
-package main
-
 import (
 	"fmt"
 	"log"
@@ -17,10 +7,10 @@ import (
 	"os"
 	"strconv"
 
-	pb "github.com/mikudos/mikudos_event_sync.git/proto/schedule"
+	pb "github.com/mikudos/mikudos_event_sync/proto/event_sync"
 
-	"github.com/mikudos/mikudos_event_sync.git/config"
-	"github.com/mikudos/mikudos_event_sync.git/handler"
+	"github.com/mikudos/mikudos_event_sync/config"
+	"github.com/mikudos/mikudos_event_sync/handler"
 
 	"google.golang.org/grpc"
 )

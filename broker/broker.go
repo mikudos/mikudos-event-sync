@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/Shopify/sarama"
-	"github.com/mikudos/mikudos_event_sync.git/config"
+	"github.com/mikudos/mikudos_event_sync/config"
 )
 
 // BrokerInstance faaa

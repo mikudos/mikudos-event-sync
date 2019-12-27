@@ -4,9 +4,9 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
-	"operator/config"
 
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/mikudos/mikudos_event_sync/config"
 )
 
 var (

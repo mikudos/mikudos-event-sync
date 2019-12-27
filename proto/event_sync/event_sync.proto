@@ -3,55 +3,50 @@ syntax = "proto3";
 package event_sync;
 
 service EventSyncService {
-    // your model Requests
-    rpc FindEventSyncList (FindRequest) returns (FindEventSyncResult) {}
-    rpc GetEventSyncById (GetRequest) returns (EventSync) {}
-    rpc CreateEventSync (CreateEventSyncRequest) returns (EventSync) {}
-    rpc UpdateEventSync (UpdateEventSyncRequest) returns (EventSync) {}
-    rpc UpdateEventSyncById (UpdateEventSyncByIdRequest) returns (EventSync) {}
-    rpc DeleteEventSync (FindRequest) returns (DeleteResult) {}
-    rpc DeleteEventSyncById (GetRequest) returns (DeleteResult) {}
+  // your model Requests
+  rpc FindSceneInstanceList(FindRequest) returns (FindEventSyncResult) {}
+  rpc CreateEventSync(CreateEventSyncRequest) returns (EventSync) {}
+  rpc UpdateEventSync(UpdateEventSyncRequest) returns (EventSync) {}
+  rpc UpdateEventSyncById(UpdateEventSyncByIdRequest) returns (EventSync) {}
+  rpc DeleteEventSync(FindRequest) returns (DeleteResult) {}
+  rpc DeleteEventSyncById(GetRequest) returns (DeleteResult) {}
 }
 
-message FindRequest {
-    string query = 1;
-}
+message FindRequest { string query = 1; }
 
 message GetRequest {
-    string id = 1;
-    string query = 2;
+  string id = 1;
+  string query = 2;
 }
 
-message CreateEventSyncRequest {
-    string name = 1;
-}
+message CreateEventSyncRequest { string name = 1; }
 
 message UpdateEventSyncRequest {
-    string query = 1;
-    CreateEventSyncRequest obj = 2;
+  string query = 1;
+  CreateEventSyncRequest obj = 2;
 }
 
 message UpdateEventSyncByIdRequest {
-    string id = 1;
-    CreateEventSyncRequest obj = 2;
+  string id = 1;
+  CreateEventSyncRequest obj = 2;
 }
 
 message DeleteResult {
-    bool state = 1;
-    int32 num = 2;
+  bool state = 1;
+  int32 num = 2;
 }
 
 message EventSync {
-    string id = 1;
-    string name = 2;
-    string createdAt = 13;
-    string updatedAt = 14;
-    string deletedAt = 15;
+  string id = 1;
+  string name = 2;
+  string createdAt = 13;
+  string updatedAt = 14;
+  string deletedAt = 15;
 }
 
 message FindEventSyncResult {
-    repeated EventSync data = 1;
-    int32 limit = 2;
-    int64 skip = 3;
-    int64 total = 4;
+  repeated EventSync data = 1;
+  int32 limit = 2;
+  int64 skip = 3;
+  int64 total = 4;
 }
