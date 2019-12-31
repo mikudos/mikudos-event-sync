@@ -1,5 +1,7 @@
 package server
 
+import pb "github.com/mikudos/mikudos_event_sync/proto/event_sync"
+
 // InfoType InfoType
 type InfoType int32
 
@@ -14,6 +16,7 @@ const (
 
 // Server Server
 type Server struct {
+	pb.EventSyncServiceServer
 	SceneName          string
 	streamID           uint32
 	SceneInstanceChans map[string]map[uint32]chan bool

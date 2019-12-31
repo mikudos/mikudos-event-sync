@@ -10,7 +10,7 @@ import (
 // FindSceneInstanceList FindSceneInstanceList
 func (s *Server) FindSceneInstanceList(ctx context.Context, req *pb.FindRequest) (*pb.FindEventSyncResult, error) {
 	list := []string{}
-	for instanceID, _ := range s.SceneInstanceInfos {
+	for instanceID := range s.SceneInstanceInfos {
 		if s.SceneInstanceInfos[instanceID][InstanceState] == req.GetState().String() {
 			list = append(list, instanceID)
 		}
